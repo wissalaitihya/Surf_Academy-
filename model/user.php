@@ -8,7 +8,7 @@ class User{
     private $created_at;
     private $role;
 
-    public function __construct($id, $name, $email, $password, $created_at, $role){
+    public function __construct($id = null, $name = null, $email = null, $password = null, $created_at = null, $role = null){
        $this->id = $id;
        $this->name = $name;
        $this->email = $email;
@@ -48,7 +48,7 @@ class User{
 
 public function register($pdo){
      $stmt = $pdo->prepare("INSERT INTO users (name, email, password, created_at, role) VALUES (?, ?, ?, ?, ?)");
-     $stmt->execute([$this->email, password_hash($this->password, PASSWORD_DEFAULT), $this->role]);
+     $stmt->execute([$this->name,$this->email, password_hash($this->password, PASSWORD_DEFAULT), $this->created_at, $this->role]);
 }
 
 
@@ -63,11 +63,18 @@ public function login($pdo, $email, $password){
    }
 
    public function FindByEmail($pdo, $email){
- 
-
-
+    $stmt=$pdo->prepare("SELECT * FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    return $stmt->fetch();
    }
 
+
+   public function FindById($pdo, $id){
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->execute([$id]);
+return $stmt->fetch();
+   }
+   
 }
 
 
