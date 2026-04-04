@@ -1,5 +1,5 @@
 <?php
-
+require_once '../config/db.php';
 class User{
     private $id;
     private $name;
