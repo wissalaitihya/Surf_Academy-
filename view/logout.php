@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(isset($_GET["confirm"]) && $_GET["confirm"] === "true") {
-   require_once("../controller/AuthoControllers.php");
+   require_once __DIR__ . "/../controller/AuthControllers.php";
    $authoController = new AuthControllers (null);
    $authoController->logout();
 }

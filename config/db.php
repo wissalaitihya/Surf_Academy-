@@ -26,7 +26,7 @@ class Database {
     }
 
     public function getPdo() {
-        if ($this->pdo === null) {
+        if ($this->pdo == null) {
             $this->connect(); 
         }
         return $this->pdo;

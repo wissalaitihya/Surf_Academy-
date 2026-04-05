@@ -1,6 +1,6 @@
 <?php
-require_once('../config/db.php');
-require_once('../model/user.php');
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../model/user.php';
  
 class Student {
     private $id;
@@ -69,21 +69,21 @@ public static function searchStudents($pdo, $search){
     return $stmt->fetchAll();
 }
 public static function deleteStudent($pdo, $id){
-$stmt= $pdo->prepare("DELETE FROM students WHERE id = ? AND role = 'student'");
+$stmt= $pdo->prepare("DELETE FROM students WHERE id = ?");
 return $stmt->execute([$id]);
 }
 public static function updateStudent($pdo, $id, $name, $country, $level){
-    $stmt = $pdo->prepare("UPDATE students SET name = ?, country = ?, level = ? WHERE id = ? AND role = 'student'");
+    $stmt = $pdo->prepare("UPDATE students SET name = ?, country = ?, level = ? WHERE id = ?");
     return $stmt->execute([$name, $country, $level, $id]);
 }
-public static function getStudentLessons($pdo, $user_id){
-    $stmt = $pdo->prepare("SELECT * FROM enrollements WHERE user_id = ? ");
-    $stmt->execute([$user_id]);
+public static function getStudentLessons($pdo, $student_id){
+    $stmt = $pdo->prepare("SELECT l.* FROM lessons l JOIN enrollments e ON l.id = e.lesson_id JOIN students s ON s.id = e.student_id WHERE s.id = ?");
+    $stmt->execute([$student_id]);
     return $stmt->fetchAll();
 }
-public static function getStudentStatus($pdo, $user_id){
-   $stmt = $pdo ->prepare("SELECT status FROM enrollements WHERE user_id = ? ");
-    $stmt->execute([$user_id]);
+public static function getStudentStatus($pdo, $student_id){
+   $stmt = $pdo ->prepare("SELECT e.payment_status FROM enrollments e WHERE e.student_id = ?");
+    $stmt->execute([$student_id]);
     return $stmt->fetchAll();
 }
 }

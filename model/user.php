@@ -1,5 +1,5 @@
 <?php
-require_once '../config/db.php';
+require_once __DIR__ . "/../config/db.php";
 class User{
     private $id;
     private $name;
@@ -45,10 +45,10 @@ class User{
     public function setRole($role){
          $this->role = $role; }
 
-
+     
 public function register($pdo){
      $stmt = $pdo->prepare("INSERT INTO users (name, email, password, created_at, role) VALUES (?, ?, ?, ?, ?)");
-     $stmt->execute([$this->name,$this->email, password_hash($this->password, PASSWORD_DEFAULT), $this->created_at, $this->role]);
+     return $stmt->execute([$this->name,$this->email, $this->password, $this->created_at, $this->role]);
 }
 
 
