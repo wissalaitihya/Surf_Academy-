@@ -34,6 +34,5 @@ class Database {
     
 }
 $db = new Database();
-$dbtest= $db -> connect();
 ?>
 
